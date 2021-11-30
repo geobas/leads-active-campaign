@@ -165,6 +165,8 @@ return [
         /*
          * Package Service Providers...
          */
+        Jenssegers\Mongodb\MongodbServiceProvider::class,
+        Gentor\ActiveCampaign\ActiveCampaignServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -174,6 +176,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\ResponseServiceProvider::class,
 
     ],
 
@@ -229,6 +232,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'AC' => Gentor\ActiveCampaign\Facades\ActiveCampaign::class,
 
     ],
 
