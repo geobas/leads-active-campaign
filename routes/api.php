@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LeadController;
+use App\Http\Controllers\ListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::apiResource('leads', LeadController::class);
+
+Route::get('/list/create', [ListController::class, 'createList'])->name('lists.create.list');
+
+Route::get('/list/sync/all', [ListController::class, 'syncAll'])->name('lists.sync.all');
