@@ -7,6 +7,7 @@ use App\Models\Lead;
 use App\Http\Requests\Lead as LeadRequest;
 use App\Helpers\HttpStatus as Status;
 use App\Services\ActiveCampaignService;
+use App\Http\Resources\Lead as LeadResource;
 
 class LeadController extends Controller
 {
@@ -48,7 +49,7 @@ class LeadController extends Controller
     {
         try {
             return response()->api([
-                'data' => $this->lead->all(),
+                'data' => LeadResource::collection($this->lead->all()),
             ], Status::OK);
         } catch (Throwable $t) {
             $this->logError($t);
@@ -72,7 +73,7 @@ class LeadController extends Controller
                 $this->service->syncContact($lead, $request->list_id);
 
                 return response()->api([
-                    'data' => $lead,
+                    'data' => new LeadResource($lead),
                 ], Status::CREATED);
             }
         } catch (Throwable $t) {
@@ -92,7 +93,7 @@ class LeadController extends Controller
     {
         try {
             return response()->api([
-                'data' => $lead,
+                'data' => new LeadResource($lead),
             ], Status::OK);
         } catch (Throwable $t) {
             $this->logError($t);
@@ -116,7 +117,7 @@ class LeadController extends Controller
             $this->service->syncContact($lead, $request->list_id);
 
             return response()->api([
-                'data' => $lead,
+                'data' => new LeadResource($lead),
             ], Status::OK);
         } catch (Throwable $t) {
             $this->logError($t);
@@ -133,11 +134,11 @@ class LeadController extends Controller
      */
     public function destroy(Lead $lead)
     {
-        try {            
+        try {
             // $this->service->deleteContact($lead);            
 
             return response()->api([
-                'data' => tap($lead)->delete(),
+                'data' => new LeadResource(tap($lead)->delete()),
             ], Status::OK);
         } catch (Throwable $t) {
             $this->logError($t);
