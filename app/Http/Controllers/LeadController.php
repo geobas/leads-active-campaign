@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Throwable;
 use App\Models\Lead;
 use App\Http\Requests\Lead as LeadRequest;
@@ -66,17 +67,25 @@ class LeadController extends Controller
      */
     public function store(LeadRequest $request)
     {
+        $session = DB::getMongoClient()->startSession();
+
+        $session->startTransaction();
+
         try {
             $lead = $this->lead->create($request->all());
 
             if (!empty($lead)) {
                 $this->service->syncContact($lead, $request->list_id);
 
+                $session->commitTransaction();
+
                 return response()->api([
                     'data' => new LeadResource($lead),
                 ], Status::CREATED);
             }
         } catch (Throwable $t) {
+            $session->abortTransaction();
+
             $this->logError($t);
         }
     }
@@ -111,15 +120,23 @@ class LeadController extends Controller
      */
     public function update(LeadRequest $request, Lead $lead)
     {
+        $session = DB::getMongoClient()->startSession();
+
+        $session->startTransaction();
+
         try {
             $lead->update($request->all());
 
             $this->service->syncContact($lead, $request->list_id);
 
+            $session->commitTransaction();
+
             return response()->api([
                 'data' => new LeadResource($lead),
             ], Status::OK);
         } catch (Throwable $t) {
+            $session->abortTransaction();
+
             $this->logError($t);
         }
     }
