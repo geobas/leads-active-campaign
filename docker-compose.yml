@@ -1,0 +1,25 @@
+version: '3.7'
+services: 
+  app:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    container_name: 'laravel-active-campaign'
+    ports:
+      - 8080:80
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:4.4
+    container_name: 'mongo-active-campaign'
+    restart: always
+    ports: 
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: 'leads'
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - ~/Workspaces/mongo/db:/data/db
