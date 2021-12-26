@@ -8,10 +8,12 @@ The assignment is to create a restful API that will persist Leads (potential cus
 ### Set up
 ```
 1. git clone git@github.com:geobas/leads-active-campaign.git leads_active_campaign
-2. composer install
-3. composer run-script post-root-package-install
-4. Modify the generated .env accordingly
-5. artisan optimize
+2. docker-compose up -d && docker exec -it laravel-active-campaign bash
+3. composer install
+4. composer run-script post-root-package-install
+5. Modify the generated .env accordingly
+6. ./artisan optimize
+7. Go to http://localhost:8080
 ```
 
 ### Postman collection
