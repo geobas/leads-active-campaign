@@ -17,7 +17,7 @@ The assignment is to create a restful API that will persist Leads (potential cus
 ```
 
 ### Postman collection
-* Download [here](https://www.getpostman.com/collections/21006413dab0e4e6ce1d)
+* Download [here](https://api.postman.com/collections/18571919-08860d87-642e-42e4-89f1-b60d37e84273?access_key=PMAT-01GNZ88KKCX44RHGJA0MDBE3SC)
 * Create a new Environment and set a 'domain' variable
 
 ### Instructions
